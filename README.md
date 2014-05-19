@@ -1,13 +1,39 @@
+This is _Teo_, an application used to demonstrate and test various aspects of a swing-based desktop application
+and command line interface sharing the same OSGi bundles.
+
+Project Structure
+=================
+
+_Teo_ is composed of multiple sub projects which mainly generate OSGi bundles.
+
+* `teo-cli` - The launcher
+* `teo-core` - Represents Teo's core library and core API
+* `teo-gui` - Represents Teo's (empty) desktop GUI application and GUI API
+* `teo-gui-apps` - Tests the OSGi application admin specification (will appear in "Tools" menu)
+* `teo-gui-obr` - Tests the OSGi repository and deployment admin (will appear in "Help" menu)
+* `teo-gui-acme1` - GUI extension #1 from ACME (will appear in "View" menu)
+* `teo-gui-acme2` - GUI extension #2 from ACME (will appear in "View" menu)
+* `com.acme.toolbox` - Generates a deployment package comprising the `teo-gui-acme1` and `teo-gui-acme2` bundles.
+
 
 Setup
 =====
 
-This program, _Teo_ uses the Apache Felix OSGi framework v4.4. In addition to Felix 4.4 you need download the following 
+_Teo_ uses the Apache Felix OSGi framework v4.4. In addition to Felix 4.4 you need download the following
 bundles from http://felix.apache.org/ and copy their JARs to `$FELIX_HOME/bundles`.
 
+* org.apache.felix.bundlerepository-1.6.6  (if not contained in framework by default)
 * org.apache.felix.deploymentadmin-0.9.6
-* org.apache.felix.bundlerepository-1.6.6
 * org.apache.felix.dependencymanager-3.1.0
+
+
+Building
+========
+
+`mvn install` does the job. All OSGi bundles (*.jar) are copied into the `modules` folder.
+
+For deployment admin testing, a separate deployment package `com.acme.toolbox.dp.jar` is generated in
+`com.acme.toolbox/target`.
 
 
 Launching
@@ -17,6 +43,8 @@ You can use IDEA's OSGi Framework integration to launch Teo or directly using th
 In the latter case copy the exiting `teo.config.txt` and rename it to `teo.config`. It is a standard Java properties file. 
 If you want to use different configurations set the Java system property `teo.config` to your configuration file.
 
+To test package deployment, delete the ACME directories and JARs in the `modules` folder. As deployment package select
+`com.acme.toolbox/target/com.acme.toolbox.dp.jar`.
 
 
 Existing Problems and Questions
@@ -85,8 +113,8 @@ compilation. This prevents an IDE from detected configuration errors at compile 
 
 
 
-Pros and Cons
-=============
+Pros and Cons for Sentinel Toolbox
+==================================
 
 Pros
 ----
@@ -96,14 +124,17 @@ Pros
 ** Bundle repository admin
 ** Deployment package format
 ** Deployment admin
+* Efficiently solves plugins dependency conflicts
 * Framework implementations, Felix & Equinox
+* OSGi framework APIs are not very invasive (can be limited to org.osgi.framework.BundleActivator sub classes)
 
 
 Cons
 ----
 
-* It is complex and complicated
-* Framework runtime errors are hard to trace
+* Core specs are already complex, the compendium specs are overwhelming
+* Using maven bundle plugin prevents IDEA from telling (import/export dependency) problems at compile time
+* Framework runtime (import/export dependency, class loader) errors are very hard to trace
 
 
 
