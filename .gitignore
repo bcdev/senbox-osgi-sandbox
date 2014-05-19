@@ -1,7 +1,7 @@
+bundle-cache
 target
 modules
 .idea
-.bundle-cache
 *.iml
 *.class
 *.jar
