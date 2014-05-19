@@ -7,4 +7,5 @@ modules
 *.jar
 *.dp
 org.apache.felix.framework-4.4.0
+teo.config
 

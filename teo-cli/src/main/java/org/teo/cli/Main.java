@@ -40,7 +40,7 @@ import java.util.jar.Manifest;
 public class Main {
 
     public static final String DEFAULT_CONFIG_FILE = "./teo.config";
-    public static final String DEFAULT_BUNDLE_CACHE_DIR = "./.bundle-cache";
+    public static final String DEFAULT_BUNDLE_CACHE_DIR = "./bundle-cache";
     public static final String DEFAULT_MODULES_DIR = "./modules";
 
     static Framework framework;
@@ -86,7 +86,39 @@ public class Main {
         }
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+        HashMap<String, String> frameworkConfig = getFrameworkConfig();
 
+        try {
+            FrameworkFactory factory = getFrameworkFactory();
+            framework = factory.newFramework(frameworkConfig);
+            framework.init();
+
+            long t1 = System.currentTimeMillis();
+            processModules(framework.getBundleContext());
+            long t2 = System.currentTimeMillis();
+            System.out.println("Processing modules took " + (t2 - t1) + " ms");
+
+            framework.getBundleContext().addFrameworkListener(new MyFrameworkListener(mainEnterTime));
+            framework.getBundleContext().addBundleListener(new BundleListener() {
+                @Override
+                public void bundleChanged(BundleEvent event) {
+                    System.out.println("Bundle event: " + event.getOrigin().getSymbolicName() + ": " + event.getType());
+                }
+            });
+            long t3 = System.currentTimeMillis();
+            framework.start();
+            long t4 = System.currentTimeMillis();
+            System.out.println("Starting framework took " + (t4 - t3) + " ms");
+            framework.waitForStop(0);
+            System.exit(0);
+        } catch (Exception ex) {
+            System.err.println("Could not create OSGi framework: " + ex);
+            ex.printStackTrace();
+            System.exit(2);
+        }
+    }
+
+    private static HashMap<String, String> getFrameworkConfig() {
         HashMap<String, String> frameworkConfig = new HashMap<>();
         for (String key : config.stringPropertyNames()) {
             frameworkConfig.put(key, config.getProperty(key));
@@ -97,32 +129,7 @@ public class Main {
         if (frameworkConfig.get(Constants.FRAMEWORK_STORAGE_CLEAN) == null) {
             frameworkConfig.put(Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT);
         }
-
-        try {
-            FrameworkFactory factory = getFrameworkFactory();
-            framework = factory.newFramework(frameworkConfig);
-            framework.init();
-
-            long t1 = System.currentTimeMillis();
-            processModules(framework.getBundleContext());
-            long t2 = System.currentTimeMillis();
-            System.out.println("processModules() took " + (t2-t1) + " ms");
-
-            framework.getBundleContext().addFrameworkListener(new MyFrameworkListener(mainEnterTime));
-            framework.getBundleContext().addBundleListener(new BundleListener() {
-                @Override
-                public void bundleChanged(BundleEvent event) {
-                    System.out.println("Bundle event: " + event.getOrigin().getSymbolicName() + ": " + event.getType());
-                }
-            });
-            framework.start();
-            framework.waitForStop(0);
-            System.exit(0);
-        } catch (Exception ex) {
-            System.err.println("Could not create OSGi framework: " + ex);
-            ex.printStackTrace();
-            System.exit(2);
-        }
+        return frameworkConfig;
     }
 
     private static FrameworkFactory getFrameworkFactory() {
