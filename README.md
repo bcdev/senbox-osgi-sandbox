@@ -7,13 +7,15 @@ Project Structure
 _Teo_ is composed of multiple sub projects which mainly generate OSGi bundles.
 
 * `teo-cli` - The launcher
+* `teo-appadmin` - Registers an OSGi Application Admin service implementation
 * `teo-core` - Represents Teo's core library and core API
-* `teo-gui` - Represents Teo's (empty) desktop GUI application and GUI API
-* `teo-gui-apps` - Tests the OSGi application admin specification (will appear in "Tools" menu)
-* `teo-gui-obr` - Tests the OSGi repository and deployment admin (will appear in "Help" menu)
+* `teo-gui` - Represents Teo's (empty) desktop GUI application and GUI API. Registers the 'gui' service.
+* `teo-gui-apps` - Uses the OSGi OSGi Application Admin service (tool will appear in "Tools" menu)
+* `teo-gui-obr` - Uses the OSGi OSGi Repository Admin and and Deployment Admin services (tools will appear in "Help" menu)
 * `teo-gui-acme1` - GUI extension #1 from ACME (will appear in "View" menu)
 * `teo-gui-acme2` - GUI extension #2 from ACME (will appear in "View" menu)
 * `com.acme.toolbox` - Generates a deployment package comprising the `teo-gui-acme1` and `teo-gui-acme2` bundles.
+* `odp-maven-plugin` - OSGi Deployment Package Maven Plugin (required because none of the Maven plugins can create ZIPs with entries in a defined order)
 
 
 Setup
@@ -120,10 +122,10 @@ Pros
 ----
 
 * Open specifications, documentation, widely used, lots of fora and discussion groups
-** Bundle format
 ** Bundle repository admin
+** Bundle format
+** Deployment admin for Toolbox installation (cool features such as fixes, rollback, icon)
 ** Deployment package format
-** Deployment admin
 * Efficiently solves plugins dependency conflicts
 * Framework implementations, Felix & Equinox
 * OSGi framework APIs are not very invasive (can be limited to org.osgi.framework.BundleActivator sub classes)
