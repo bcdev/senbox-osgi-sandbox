@@ -36,6 +36,7 @@ public class ExecutableHandle extends ApplicationHandle implements Runnable {
     protected void destroySpecific() {
         state = STOPPING;
         registration.setProperties(getServiceProperties());
+        registration.unregister();
         thread.interrupt();
     }
 
@@ -54,7 +55,6 @@ public class ExecutableHandle extends ApplicationHandle implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        registration.unregister();
     }
 
     Dictionary getServiceProperties() {
