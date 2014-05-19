@@ -15,7 +15,7 @@ _Teo_ is composed of multiple sub projects which mainly generate OSGi bundles.
 * `teo-gui-acme1` - GUI extension #1 from ACME (will appear in "View" menu)
 * `teo-gui-acme2` - GUI extension #2 from ACME (will appear in "View" menu)
 * `com.acme.toolbox` - Generates a deployment package comprising the `teo-gui-acme1` and `teo-gui-acme2` bundles.
-* `odp-maven-plugin` - OSGi Deployment Package Maven Plugin (required because none of the Maven plugins can create ZIPs with entries in a defined order)
+* `odp-maven-plugin` - OSGi Deployment Package Maven Plugin (goal `odp` is required because none of the Maven plugins can create ZIPs with entries in a defined order)
 
 
 Setup
@@ -32,10 +32,10 @@ bundles from http://felix.apache.org/ and copy their JARs to `$FELIX_HOME/bundle
 Building
 ========
 
-`mvn install` does the job. All OSGi bundles (*.jar) are copied into the `modules` folder.
+`mvn package` does the job. All OSGi bundles (*.jar) are copied into the `modules` folder.
 
-For deployment admin testing, a separate deployment package `com.acme.toolbox.dp.jar` is generated in
-`com.acme.toolbox/target`.
+For deployment admin testing, a separate deployment package `com.acme.toolbox.dp` can be generated in
+`com.acme.toolbox/target` by using the Maven goal `odp:odp`.
 
 
 Launching
