@@ -30,9 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.ServiceLoader;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
-import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Teo's command line interface.
@@ -43,7 +42,7 @@ public class Main {
     public static final String DEFAULT_BUNDLE_CACHE_DIR = "./bundle-cache";
     public static final String DEFAULT_MODULES_DIR = "./modules";
 
-    static Framework framework;
+    private static Framework framework;
     private static String contextName;
     private static Properties config;
     private static Path[] moduleDirs;
@@ -51,39 +50,14 @@ public class Main {
     private static List<Path> dpPaths;
     private static DirectoryWatcher directoryWatcher;
 
-
     public static void main(String[] args) throws Exception {
 
-        JarInputStream jarFile = new JarInputStream(new FileInputStream("com.acme.toolbox/target/com.acme.toolbox.dp.jar"));
-        Manifest manifest = jarFile.getManifest();
-        System.out.println("manifest = [" + manifest + "]");
-        while (true) {
-            JarEntry entry = jarFile.getNextJarEntry();
-            if (entry == null) break;
-            System.out.println("entry = [" + entry + "]");
-        }
-
+        //listZipEntries("com.acme.toolbox/target/com.acme.toolbox-1.0.4.dp");
         //System.exit(0);
 
         final long mainEnterTime = System.currentTimeMillis();
 
-        Properties systemProperties = System.getProperties();
-        contextName = systemProperties.getProperty("teo.context", "teo");
-        File configFile = new File(systemProperties.getProperty(contextName + ".config", DEFAULT_CONFIG_FILE));
-        config = new Properties(systemProperties);
-        if (configFile.exists()) {
-            try (FileReader reader = new FileReader(configFile)) {
-                config.load(reader);
-            }
-        }
-        for (String key : systemProperties.stringPropertyNames()) {
-            if (key.startsWith(contextName + ".")
-                    || key.startsWith("felix.")
-                    || key.contains(".felix.")
-                    || key.startsWith("org.osgi.")) {
-                config.put(key, systemProperties.getProperty(key));
-            }
-        }
+        loadConfig();
 
         Runtime.getRuntime().addShutdownHook(new ShutdownHook());
         HashMap<String, String> frameworkConfig = getFrameworkConfig();
@@ -115,6 +89,45 @@ public class Main {
             System.err.println("Could not create OSGi framework: " + ex);
             ex.printStackTrace();
             System.exit(2);
+        }
+    }
+
+    private static void listZipEntries(String name) throws IOException {
+        try (ZipInputStream jarFile = new ZipInputStream(new FileInputStream(name))) {
+            System.out.println("Content of ZIP archive " + name + ":");
+            for (int index = 0; ; index++) {
+                ZipEntry entry = jarFile.getNextEntry();
+                if (entry == null) {
+                    break;
+                }
+                System.out.printf("  %4s: [%s]%n", index + 1, entry);
+            }
+        }
+    }
+
+    private static void loadConfig() throws IOException {
+        Properties systemProperties = System.getProperties();
+        contextName = systemProperties.getProperty("teo.context", "teo");
+        File configFile = new File(systemProperties.getProperty(contextName + ".config", DEFAULT_CONFIG_FILE));
+        config = new Properties(systemProperties);
+        if (configFile.exists()) {
+            try (FileReader reader = new FileReader(configFile)) {
+                config.load(reader);
+            }
+        }
+        for (String key : systemProperties.stringPropertyNames()) {
+            boolean unusedKey = key.startsWith("java.")
+                                || key.startsWith("awt.")
+                                || key.startsWith("os.")
+                                || key.startsWith("user.")
+                                || key.startsWith("idea.")
+                                || key.startsWith("idea.")
+                                || key.startsWith("sun.")
+                                || key.startsWith("oracle.");
+            if (!unusedKey) {
+                System.out.println("key = " + key);
+                config.put(key, systemProperties.getProperty(key));
+            }
         }
     }
 
