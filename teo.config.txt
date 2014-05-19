@@ -1,9 +1,11 @@
-#org.osgi.framework.storage = ./bundle-cache
-#org.osgi.framework.storage.clean = onFirstInit
+#org.osgi.framework.storage=bundle-cache
+#org.osgi.framework.storage.clean=onFirstInit
+#org.osgi.service.http.port=8080
+obr.repository.url=http://felix.apache.org/obr/releases.xml
 
-teo.modules.path = ./modules
-teo.modules.jarsOnly = true
-#teo.modules.dirsOnly = true
+teo.modules.path=./modules
+teo.modules.jarsOnly=true
+#teo.modules.dirsOnly=true
 
 teo.auto.start=\
  file:///C:/Users/Norman/.m2/repository/org/osgi/org.osgi.core/5.0.0/org.osgi.core-5.0.0.jar  \
