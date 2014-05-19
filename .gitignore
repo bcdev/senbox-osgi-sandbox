@@ -1,0 +1,10 @@
+target
+modules
+.idea
+.bundle-cache
+*.iml
+*.class
+*.jar
+*.dp
+org.apache.felix.framework-4.4.0
+

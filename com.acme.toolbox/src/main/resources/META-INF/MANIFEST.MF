@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+DeploymentPackage-ManifestVersion: 1
+DeploymentPackage-Name: ACME Toolbox
+DeploymentPackage-Description: Contains the famous ACME tools
+DeploymentPackage-SymbolicName: com.acme.toolbox
+DeploymentPackage-Version: 1.0.4
+DeploymentPackage-Copyright: ACME Inc. (c) 2014
+DeploymentPackage-Vendor: ACME
+DeploymentPackage-License: http://www.gnu.org/licenses/gpl.html
+
+Name: teo-gui-acme1-1.0.4.jar
+Bundle-SymbolicName: teo-gui-acme1
+Bundle-Version: 1.0.4
+
+Name: teo-gui-acme2-1.0.2.jar
+Bundle-SymbolicName: teo-gui-acme2
+Bundle-Version: 1.0.2

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>teo-osgi-sandbox</artifactId>
+        <groupId>org.teo</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <packaging>bundle</packaging>
+
+    <artifactId>teo-gui-apps</artifactId>
+    <name>Teo GUI Apps Plugin</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.teo</groupId>
+            <artifactId>teo-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.teo</groupId>
+            <artifactId>teo-gui</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Activator>org.teo.apps.AppsActivator</Bundle-Activator>
+                        <Import-Package>
+                            javax.swing,
+                            javax.swing.table,
+                            org.osgi.framework,
+                            org.osgi.service.application,
+                            org.osgi.util.tracker,
+                            org.teo.core,
+                            org.teo.gui,
+                            org.teo.gui.command
+                        </Import-Package>
+                        <Private-Package>org.teo.apps</Private-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

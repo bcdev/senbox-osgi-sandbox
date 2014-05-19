@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>teo-osgi-sandbox</artifactId>
+        <groupId>org.teo</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <packaging>bundle</packaging>
+
+    <artifactId>teo-gui</artifactId>
+    <name>Teo GUI</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.teo</groupId>
+            <artifactId>teo-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Activator>org.teo.gui.GuiActivator</Bundle-Activator>
+                        <Import-Package>
+                            org.osgi.framework,
+                            org.osgi.service.application,
+                            org.osgi.util.tracker,
+                            org.teo.core,javax.swing
+                        </Import-Package>
+                        <Export-Package>org.teo.gui,org.teo.gui.command</Export-Package>
+                        <Private-Package>org.teo.gui.impl</Private-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
