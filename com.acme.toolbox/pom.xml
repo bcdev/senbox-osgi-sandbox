@@ -25,6 +25,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -55,17 +56,16 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>com.bc.maven</groupId>
+                <artifactId>odp-maven-plugin</artifactId>
+                <version>0.6-SNAPSHOT</version>
                 <configuration>
-                    <finalName>${project.artifactId}.dp</finalName>
-                    <archive>
-                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-
-                    </archive>
+                    <outputDirectory>../modules</outputDirectory>
+                    <resources>
+                        <resource>icon.png</resource>
+                    </resources>
                 </configuration>
             </plugin>
-
 
         </plugins>
     </build>
