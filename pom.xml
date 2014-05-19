@@ -27,6 +27,7 @@
         <module>teo-gui-acme1</module>
         <module>teo-gui-acme2</module>
         <module>com.acme.toolbox</module>
+        <module>odp-maven-plugin</module>
     </modules>
 
     <dependencyManagement>
@@ -44,8 +45,33 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.framework</artifactId>
+                <version>4.4.0</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-core</artifactId>
+                <version>${teo.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-appadmin</artifactId>
+                <version>${teo.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-splash</artifactId>
+                <version>${teo.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-cli</artifactId>
                 <version>${teo.version}</version>
                 <scope>compile</scope>
             </dependency>
@@ -56,11 +82,18 @@
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.framework</artifactId>
-                <version>4.4.0</version>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-gui-apps</artifactId>
+                <version>${teo.version}</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-gui-obr</artifactId>
+                <version>${teo.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -76,7 +109,6 @@
     </dependencies>
 
     <build>
-        <outputDirectory>../modules/${project.artifactId}-${project.version}</outputDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -87,13 +119,62 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-core</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-gui</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-gui-apps</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-gui-obr</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-splash</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-cli</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>2.3.7</version>
+                    <version>2.4.0</version>
                     <extensions>true</extensions>
                 </plugin>
             </plugins>
