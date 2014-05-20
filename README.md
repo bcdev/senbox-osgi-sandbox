@@ -1,20 +1,43 @@
-This is _Teo_, an application used to demonstrate and test various aspects of a swing-based desktop application
-and command line interface sharing the same OSGi bundles.
+Project Description
+===================
+
+This is _Teo_, an application is used to get in contact with OSGi programming and most importantly, as a mean to
+make a decision if OSGi should be used as a fundamental architectural layer of the Sentinel Toolbox. In particular,
+Teo covers the following use cases.
+
+*UC-1*: Launch a GUI app and also a CLI app from a set of shared bundles
+The current Ceres solution is to have a launcher that operates in two ways. For GUI apps, it works similar to OSGi,
+that is, all JARs in the `modules` folder of the app's installation directory are started as dynamic modules.
+For CLI apps, the launcher that constructs a classpath from all JARs in the `modules` folder.
+
+*UC-2*: Run multiple app instances at the same time. This is mandatory for the CLI, desired for the GUI.
+There is no problem with Ceres in this case, because Ceres does not persistently maintain module state.
+
+*UC-3*: Use the Toolbox API in non-OSGi based environments such as as Calvalus and MERCI. Use the API from other languages, such as the Python API wrapper.
+There is no problem with Ceres in this case, because Ceres does not persistently maintain module state. However,
+we currently provide app services via two mechanisms: Java SPI and our Ceres extension registry. The latter is not
+accessible in CLI mode. In CLI mode, we are restricted to Java SPI which requires a non-configurable
+SPI implementation in Java.
+
+*UC-4*: Find out how OSGi can help implementing the _Toolbox Concept_, which is set of modules within a host application.
+
+*UC-5*: Find out how OSGi can help implementing the _Stand-Alone Tools Adapter_, which is an an environment for the
+integration external executables in the a host application.
 
 Project Structure
 =================
 
 _Teo_ is composed of multiple sub projects which mainly generate OSGi bundles.
 
-* `teo-cli` - The launcher
-* `teo-appadmin` - Registers an OSGi Application Admin service implementation
+* `teo-cli` - The launcher. It is only a bundle so that we can update it.
+* `teo-appadmin` - A bundle that registers an OSGi Application Admin service implementation.
 * `teo-core` - Represents Teo's core library and core API
 * `teo-gui` - Represents Teo's (empty) desktop GUI application and GUI API. Registers the 'gui' service.
-* `teo-gui-apps` - Uses the OSGi OSGi Application Admin service (tool will appear in "Tools" menu)
 * `teo-gui-obr` - Uses the OSGi OSGi Repository Admin and and Deployment Admin services (tools will appear in "Help" menu)
-* `teo-gui-acme1` - GUI extension #1 from ACME (will appear in "View" menu)
-* `teo-gui-acme2` - GUI extension #2 from ACME (will appear in "View" menu)
+* `teo-gui-apps` - Uses the OSGi OSGi Application Admin service (tool will appear in "Tools" menu)
 * `com.acme.toolbox` - Generates a deployment package comprising the `teo-gui-acme1` and `teo-gui-acme2` bundles.
+** `teo-gui-acme1` - GUI extension #1 from ACME (will appear in "View" menu)
+** `teo-gui-acme2` - GUI extension #2 from ACME (will appear in "View" menu)
 * `odp-maven-plugin` - OSGi Deployment Package Maven Plugin (goal `odp` is required because none of the Maven plugins can create ZIPs with entries in a defined order)
 
 
@@ -127,8 +150,12 @@ Pros
 ** Deployment admin for Toolbox installation (cool features such as fixes, rollback, icon)
 ** Deployment package format
 * Efficiently solves plugins dependency conflicts
-* Framework implementations, Felix & Equinox
+* Felix or Equinox OS framework implementations, both can be used
 * OSGi framework APIs are not very invasive (can be limited to org.osgi.framework.BundleActivator sub classes)
+* Replace all libraries in the `libs` folder of the app's installation directory by dynamical
+  bundles.
+* Modules can deployed to the user's home directory, so individual app configurations can exist in parallel
+  for a single host application installed for all users
 
 
 Cons
