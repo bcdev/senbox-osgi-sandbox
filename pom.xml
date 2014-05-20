@@ -20,6 +20,8 @@
         <module>teo-appadmin</module>
         <module>teo-launcher</module>
         <module>teo-core</module>
+        <module>teo-core-ext1</module>
+        <module>teo-core-ext2</module>
         <module>teo-gui</module>
         <module>teo-gui-obr</module>
         <module>teo-gui-apps</module>
@@ -27,6 +29,7 @@
         <module>teo-gui-acme2</module>
         <module>com.acme.toolbox</module>
         <module>odp-maven-plugin</module>
+        <module>teo-apiusage</module>
     </modules>
 
     <dependencyManagement>
@@ -53,6 +56,18 @@
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-core</artifactId>
+                <version>${teo.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-core-ext1</artifactId>
+                <version>${teo.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.teo</groupId>
+                <artifactId>teo-core-ext2</artifactId>
                 <version>${teo.version}</version>
                 <scope>compile</scope>
             </dependency>
@@ -129,6 +144,16 @@
                                 <artifactItem>
                                     <groupId>org.teo</groupId>
                                     <artifactId>teo-core</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-core-ext1</artifactId>
+                                    <outputDirectory>modules</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.teo</groupId>
+                                    <artifactId>teo-core-ext2</artifactId>
                                     <outputDirectory>modules</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>

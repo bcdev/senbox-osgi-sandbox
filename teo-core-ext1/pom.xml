@@ -10,8 +10,15 @@
     </parent>
     <packaging>bundle</packaging>
 
-    <artifactId>teo-core</artifactId>
-    <name>Teo Core</name>
+    <artifactId>teo-core-ext1</artifactId>
+    <name>Teo Core Extension #1</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.teo</groupId>
+            <artifactId>teo-core</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -23,8 +30,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.name}</Bundle-Name>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Export-Package>org.teo.core</Export-Package>
-                        <Bundle-Activator>org.teo.core.CoreActivator</Bundle-Activator>
+                        <Bundle-Activator>org.teo.ext1.Ext1Activator</Bundle-Activator>
                     </instructions>
                 </configuration>
             </plugin>
