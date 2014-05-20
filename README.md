@@ -10,8 +10,17 @@ The current Ceres solution is to have a launcher that operates in two ways. For 
 that is, all JARs in the `modules` folder of the app's installation directory are started as dynamic modules.
 For CLI apps, the launcher that constructs a classpath from all JARs in the `modules` folder.
 
+    Result: This is no problem. See code org.teo.TeoCli and org.teo.TeoGui code. For the CLI,
+    less bundles are needed. Therefore a special launch configuration could be used or we could
+    use special Bundle requirements, see _Bundle Requirements_ in chapter 3.3.6 of the OSGi core spec.
+
+
 *UC-2*: Run multiple app instances at the same time. This is mandatory for the CLI, desired for the GUI.
 There is no problem with Ceres in this case, because Ceres does not persistently maintain module state.
+
+    Result: with Felix there seems to be no problem as long as the framework property `org.osgi.framework.storage.clean`
+    is not set. It's only value can be `onFirstInit` which will clear the cache before the framework is initialised and therefore
+    causing multiple framework instances to fail. The current startup time is around 600ms.
 
 *UC-3*: Use the Toolbox API in non-OSGi based environments such as as Calvalus and MERCI. Use the API from other languages, such as the Python API wrapper.
 There is no problem with Ceres in this case, because Ceres does not persistently maintain module state. However,
@@ -19,17 +28,25 @@ we currently provide app services via two mechanisms: Java SPI and our Ceres ext
 accessible in CLI mode. In CLI mode, we are restricted to Java SPI which requires a non-configurable
 SPI implementation in Java.
 
+    Result: no results so far.
+
 *UC-4*: Find out how OSGi can help implementing the _Toolbox Concept_, which is set of modules within a host application.
+
+    Result: Excellent support using the _Package Deployment Admin_ of the compendium specs. See code in `teo-gui-obr` module.
 
 *UC-5*: Find out how OSGi can help implementing the _Stand-Alone Tools Adapter_, which is an an environment for the
 integration external executables in the a host application.
+
+    Result: Probably good support using the _Application Admin_ of the compendium specs. See code in `teo-gui-apps`
+    module.
+
 
 Project Structure
 =================
 
 _Teo_ is composed of multiple sub projects which mainly generate OSGi bundles.
 
-* `teo-cli` - The launcher. It is only a bundle so that we can update it.
+* `teo-launcher` - Teo's launcher. It is a bundle so that we can update it.
 * `teo-appadmin` - A bundle that registers an OSGi Application Admin service implementation.
 * `teo-core` - Represents Teo's core library and core API
 * `teo-gui` - Represents Teo's (empty) desktop GUI application and GUI API. Registers the 'gui' service.
@@ -55,7 +72,7 @@ bundles from http://felix.apache.org/ and copy their JARs to `$FELIX_HOME/bundle
 Building
 ========
 
-`mvn package` does the job. All OSGi bundles (*.jar) are copied into the `modules` folder.
+`mvn install` does the job. All OSGi bundles (*.jar) are copied into the `modules` folder.
 
 For deployment admin testing, a separate deployment package `com.acme.toolbox.dp` can be generated in
 `com.acme.toolbox/target` by using the Maven goal `odp:odp`.

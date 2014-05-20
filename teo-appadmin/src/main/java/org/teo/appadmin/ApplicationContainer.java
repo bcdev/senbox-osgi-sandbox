@@ -37,6 +37,7 @@ public class ApplicationContainer implements BundleActivator, ExecutableManager 
 
         this.context = bundleContext;
 
+        long t1 = System.currentTimeMillis();
         File dir = new File("c:/windows");
         String[] exeFileNames = dir.list(new FilenameFilter() {
             public boolean accept(File dir, String name) {
@@ -48,6 +49,8 @@ public class ApplicationContainer implements BundleActivator, ExecutableManager 
                 registerExecutableDescriptor(new ExecutableDescriptor(this, new File(dir, exeFileName)));
             }
         }
+        long t2 = System.currentTimeMillis();
+        System.out.println("Registering applications took " + (t2-t1) + " ms");
     }
 
     @Override

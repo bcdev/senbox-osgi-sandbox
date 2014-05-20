@@ -11,9 +11,15 @@ public class GuiActivator implements BundleActivator, FrameworkListener {
 
     private GuiImpl gui;
     private ServiceRegistration<?> guiServiceRegistration;
+    private boolean headlessMode;
 
     @Override
     public void start(final BundleContext bundleContext) {
+        headlessMode = System.getProperty("teo.headless", "false").equalsIgnoreCase("true");
+        if (headlessMode) {
+            return;
+        }
+
         gui = new GuiImpl(bundleContext);
         gui.init();
 
@@ -23,6 +29,10 @@ public class GuiActivator implements BundleActivator, FrameworkListener {
 
     @Override
     public void stop(BundleContext bundleContext) {
+        if (headlessMode) {
+            return;
+        }
+
         bundleContext.removeFrameworkListener(this);
         guiServiceRegistration.unregister();
 

@@ -13,21 +13,18 @@ public class Acme2Activator implements BundleActivator {
 
     @Override
     public void start(BundleContext bundleContext) {
-        System.out.println("bundle started: " + bundleContext.getBundle());
-
         guiRerviceReference = bundleContext.getServiceReference(Gui.class.getName());
         if (guiRerviceReference != null) {
             gui = (Gui) bundleContext.getService(guiRerviceReference);
             CommandGroup group = gui.getCommandGroup("view");
             group.addCommand(new Acme2Command(gui));
         } else {
-            System.out.println(Acme2Activator.class.getName() + ": missing service " + Gui.class.getName());
+            System.out.println(getClass().getName() + ": missing service " + Gui.class.getName());
         }
     }
 
     @Override
     public void stop(BundleContext bundleContext) {
-        System.out.println("bundle stopped: " + bundleContext.getBundle());
         if (gui != null) {
             CommandGroup group = gui.getCommandGroup("view");
             group.removeCommand(Acme2Command.ID);

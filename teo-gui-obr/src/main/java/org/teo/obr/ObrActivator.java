@@ -44,8 +44,6 @@ public class ObrActivator implements BundleActivator, ObrManager {
 
     @Override
     public void start(BundleContext bundleContext) {
-        System.out.println("bundle started: " + bundleContext.getBundle());
-
         ServiceReference serviceReference = bundleContext.getServiceReference(Gui.class.getName());
         if (serviceReference != null) {
             Gui gui = (Gui) bundleContext.getService(serviceReference);
@@ -57,14 +55,12 @@ public class ObrActivator implements BundleActivator, ObrManager {
             trackRepositoryAdmin(bundleContext);
             trackDeploymentAdmin(bundleContext);
         } else {
-            System.out.println("ERROR: Missing service " + Gui.class.getName());
+            System.out.println(getClass().getName() + ": missing service " + Gui.class.getName());
         }
-
     }
 
     @Override
     public void stop(BundleContext bundleContext) {
-        System.out.println("bundle stopped: " + bundleContext.getBundle());
         if (deploymentAdminTracker != null) {
             deploymentAdminTracker.close();
         }

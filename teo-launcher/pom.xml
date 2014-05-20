@@ -10,9 +10,20 @@
     </parent>
     <packaging>bundle</packaging>
 
-    <artifactId>teo-splash</artifactId>
-    <name>Teo Splash Screen</name>
-    <description>Used to display a splash-screen</description>
+    <artifactId>teo-launcher</artifactId>
+    <name>Teo Launcher</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.teo</groupId>
+            <artifactId>teo-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.framework</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -24,11 +35,12 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.name}</Bundle-Name>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>org.teo.splash.SplashActivator</Bundle-Activator>
+                        <Bundle-Description>${project.description}</Bundle-Description>
                         <Import-Package>
                             org.osgi.framework,
-                            javax.swing
+                            org.osgi.framework.launch
                         </Import-Package>
+                        <Private-Package>org.teo.launcher</Private-Package>
                     </instructions>
                 </configuration>
             </plugin>

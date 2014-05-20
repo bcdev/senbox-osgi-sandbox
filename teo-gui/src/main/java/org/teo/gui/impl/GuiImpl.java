@@ -116,6 +116,13 @@ public class GuiImpl implements Gui {
         mainFrame.dispose();
         if (bundleContext != null) {
             try {
+                /*
+                Bundle systemBundle = bundleContext.getBundle(0);
+                Bundle[] bundles = systemBundle.getBundleContext().getBundles();
+                for (Bundle bundle : bundles) {
+                    bundle.stop();
+                }
+                */
                 bundleContext.getBundle(0).stop();
             } catch (BundleException e) {
                 e.printStackTrace();

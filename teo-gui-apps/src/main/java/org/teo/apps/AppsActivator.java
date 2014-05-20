@@ -24,14 +24,13 @@ public class AppsActivator implements BundleActivator {
         appsTracker = new AppsTracker();
         appsTracker.init(bundleContext);
 
-        System.out.println("bundle started: " + bundleContext.getBundle());
         guiServiceReference = bundleContext.getServiceReference(Gui.class.getName());
         if (guiServiceReference != null) {
             gui = (Gui) bundleContext.getService(guiServiceReference);
             CommandGroup group = gui.getCommandGroup("tools");
             group.addCommand(new AppsCommand(gui));
         } else {
-            System.out.println(AppsActivator.class.getName() + ": missing service " + Gui.class.getName());
+            System.out.println(getClass().getName() + ": missing service " + Gui.class.getName());
         }
     }
 

@@ -1,4 +1,4 @@
-package org.teo.cli;
+package org.teo.launcher;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DirectoryWatcher {
+class DirectoryWatcher {
 
     private final WatchService watchService;
     private final Map<Path, WatchTask> watchTasks;

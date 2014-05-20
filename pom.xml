@@ -18,9 +18,8 @@
 
     <modules>
         <module>teo-appadmin</module>
+        <module>teo-launcher</module>
         <module>teo-core</module>
-        <module>teo-splash</module>
-        <module>teo-cli</module>
         <module>teo-gui</module>
         <module>teo-gui-obr</module>
         <module>teo-gui-apps</module>
@@ -65,13 +64,7 @@
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
-                <artifactId>teo-splash</artifactId>
-                <version>${teo.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.teo</groupId>
-                <artifactId>teo-cli</artifactId>
+                <artifactId>teo-launcher</artifactId>
                 <version>${teo.version}</version>
                 <scope>compile</scope>
             </dependency>
@@ -126,7 +119,7 @@
                 <executions>
                     <execution>
                         <id>copy</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -155,12 +148,12 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.teo</groupId>
-                                    <artifactId>teo-splash</artifactId>
+                                    <artifactId>teo-launcher</artifactId>
                                     <outputDirectory>modules</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.teo</groupId>
-                                    <artifactId>teo-cli</artifactId>
+                                    <artifactId>teo-appadmin</artifactId>
                                     <outputDirectory>modules</outputDirectory>
                                 </artifactItem>
                             </artifactItems>

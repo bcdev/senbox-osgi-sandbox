@@ -25,7 +25,6 @@ public class Acme1Activator implements BundleActivator {
 
     @Override
     public void stop(BundleContext bundleContext) {
-        System.out.println("bundle stopped: " + bundleContext.getBundle());
         if (gui != null) {
             CommandGroup group = gui.getCommandGroup("view");
             group.removeCommand(Acme1Command.ID);

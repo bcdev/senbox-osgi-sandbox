@@ -28,7 +28,7 @@ class AppsCommand extends CommandBase {
     public static final String ID = "listapps";
 
     AppsCommand(Gui gui) {
-        super(gui, ID, "Executables...");
+        super(gui, ID, "Applications...");
     }
 
     @Override
