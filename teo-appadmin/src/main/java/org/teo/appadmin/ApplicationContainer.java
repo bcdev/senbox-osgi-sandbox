@@ -10,7 +10,7 @@ import java.io.FilenameFilter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AppAdminActivator implements BundleActivator, ExecutableManager {
+public class ApplicationContainer implements BundleActivator, ExecutableManager {
     public static final String APPLICATION_DESCRIPTOR = "org.osgi.vendor.application.ApplicationDescriptor";
     public static final String APPLICATION_HANDLE = "org.osgi.vendor.application.ApplicationHandle";
 
