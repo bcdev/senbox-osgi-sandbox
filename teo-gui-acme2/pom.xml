@@ -8,11 +8,11 @@
         <groupId>org.teo</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
-    <packaging>bundle</packaging>
 
     <artifactId>teo-gui-acme2</artifactId>
     <version>1.0.2</version>
     <name>Teo GUI Plugin #2 from ACME</name>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>
@@ -47,6 +47,12 @@
                         </Import-Package>
                         <Private-Package>org.teo.acme2</Private-Package>
                     </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>

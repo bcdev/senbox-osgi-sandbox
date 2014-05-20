@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1400625631272
+Build-Jdk: 1.7.0_51
+Built-By: Norman
+Bundle-Activator: org.teo.core.CoreActivator
+Bundle-ManifestVersion: 2
+Bundle-Name: Teo Core
+Bundle-SymbolicName: teo-core
+Bundle-Version: 0.1.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.teo.core;version="0.1.0.SNAPSHOT";uses:="org.osgi.fr
+ amework"
+Import-Package: org.osgi.framework;version="[1.7,2)"
+Originally-Created-By: Apache Maven Bundle Plugin
+Tool: Bnd-2.1.0.20130426-122213

@@ -8,10 +8,10 @@
         <groupId>org.teo</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
-    <packaging>bundle</packaging>
 
     <artifactId>teo-gui-obr</artifactId>
     <name>Teo GUI OBR Plugin</name>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

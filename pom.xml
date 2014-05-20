@@ -38,68 +38,62 @@
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.core</artifactId>
                 <version>${osgi.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.compendium</artifactId>
                 <version>${osgi.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>org.apache.felix.framework</artifactId>
-                <version>4.4.0</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-core</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-core-ext1</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-core-ext2</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-appadmin</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-launcher</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-gui</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-gui-apps</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.teo</groupId>
                 <artifactId>teo-gui-obr</artifactId>
                 <version>${teo.version}</version>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
 
         </dependencies>
@@ -119,72 +113,12 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-core</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-core-ext1</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-core-ext2</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-gui</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-gui-apps</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-gui-obr</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-launcher</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.teo</groupId>
-                                    <artifactId>teo-appadmin</artifactId>
-                                    <outputDirectory>modules</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -194,6 +128,27 @@
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>2.4.0</version>
                     <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>manifest</goal>
+                            </goals>
+                            <configuration>
+                                <manifestLocation>src/main/resources/META-INF</manifestLocation>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <outputDirectory>../modules</outputDirectory>
+                        <archive>
+                            <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                        </archive>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

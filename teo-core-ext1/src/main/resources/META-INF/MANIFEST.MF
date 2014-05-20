@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1400625631957
+Build-Jdk: 1.7.0_51
+Built-By: Norman
+Bundle-Activator: org.teo.ext1.Ext1Activator
+Bundle-ManifestVersion: 2
+Bundle-Name: Teo Core Extension #1
+Bundle-SymbolicName: teo-core-ext1
+Bundle-Version: 0.1.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.teo.ext1;version="0.1.0.SNAPSHOT";uses:="org.osgi.fr
+ amework"
+Import-Package: org.osgi.framework;version="[1.7,2)",org.osgi.util.track
+ er;version="[1.5,2)",org.teo.core;version="[0.1,1)"
+Originally-Created-By: Apache Maven Bundle Plugin
+Tool: Bnd-2.1.0.20130426-122213

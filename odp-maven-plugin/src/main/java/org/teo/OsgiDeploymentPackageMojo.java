@@ -24,7 +24,7 @@ import java.util.zip.ZipOutputStream;
  *
  * @author Norman Fomferra
  */
-@Mojo(name = "odp", defaultPhase = LifecyclePhase.PACKAGE)
+@Mojo(name = "run", defaultPhase = LifecyclePhase.PACKAGE)
 public class OsgiDeploymentPackageMojo extends AbstractMojo {
 
     private static final String NAME = "Name:";

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1400625633682
+Build-Jdk: 1.7.0_51
+Built-By: Norman
+Bundle-Activator: org.teo.acme1.Acme1Activator
+Bundle-ManifestVersion: 2
+Bundle-Name: Teo GUI Plugin #1 from ACME
+Bundle-SymbolicName: teo-gui-acme1
+Bundle-Version: 1.0.4
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.teo.acme1;version="1.0.4";uses:="org.osgi.framework"
+Import-Package: org.osgi.framework;version="[1.7,2)",org.teo.gui;version
+ ="[0.1,1)",org.teo.gui.command;version="[0.1,1)",org.teo.core;version="
+ [0.1,1)",javax.swing.table,org.osgi.util.tracker;version="[1.5,2)",java
+ x.swing
+Originally-Created-By: Apache Maven Bundle Plugin
+Tool: Bnd-2.1.0.20130426-122213
