@@ -86,7 +86,6 @@ public class Launcher {
         framework = factory.newFramework(frameworkConfig);
         framework.init();
 
-        framework.getBundleContext().addFrameworkListener(splashScreen);
         framework.getBundleContext().addFrameworkListener(new MyFrameworkListener());
         framework.getBundleContext().addBundleListener(new BundleListener() {
             @Override
