@@ -17,6 +17,7 @@
         <dependency>
             <groupId>org.teo</groupId>
             <artifactId>teo-core</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -31,6 +32,12 @@
                         <Bundle-Name>${project.name}</Bundle-Name>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Bundle-Activator>org.teo.ext1.Ext1Activator</Bundle-Activator>
+                        <Import-Package>
+                            org.osgi.framework,
+                            org.osgi.util.tracker,
+                            org.teo.core
+                        </Import-Package>
+                        <Private-Package>org.teo.ext1</Private-Package>
                     </instructions>
                 </configuration>
             </plugin>

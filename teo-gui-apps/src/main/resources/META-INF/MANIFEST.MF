@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1400625633307
+Bnd-LastModified: 1400631168272
 Build-Jdk: 1.7.0_51
 Built-By: Norman
 Bundle-Activator: org.teo.apps.AppsActivator
