@@ -189,7 +189,9 @@ public class Launcher {
             if (startLevel != null) {
                 persistentlyStarted = startLevel.isPersistentlyStarted();
             }
-            System.out.printf("Installed bundle found: %s; auto-start=%s%n", installedBundle.getSymbolicName(), persistentlyStarted != null ? persistentlyStarted : "?");
+            System.out.printf("Installed bundle found: %s %s; auto-start=%s%n",
+                              installedBundle.getSymbolicName(), installedBundle.getVersion(),
+                              persistentlyStarted != null ? persistentlyStarted : "?");
         }
 
         int startOptions = headlessMode ? Bundle.START_TRANSIENT : 0;
@@ -206,7 +208,10 @@ public class Launcher {
                 autoStartBundles.add(bundle);
             }
             for (Bundle bundle : autoStartBundles) {
-                System.out.printf("Starting auto start bundle: %s (%s)%n", bundle.getSymbolicName(), bundle.getLocation());
+                System.out.printf("Starting auto start bundle: %s %s (from %s)%n",
+                                  bundle.getSymbolicName(),
+                                  bundle.getVersion(),
+                                  bundle.getLocation());
                 bundle.start(startOptions);
             }
         }
@@ -235,7 +240,10 @@ public class Launcher {
         }
 
         for (Bundle bundle : bundles) {
-            System.out.printf("Starting module bundle: %s (%s)%n", bundle.getSymbolicName(), bundle.getLocation());
+            System.out.printf("Starting module bundle: %s %s (from %s)%n",
+                              bundle.getSymbolicName(),
+                              bundle.getVersion(),
+                              bundle.getLocation());
             bundle.start(startOptions);
         }
 
