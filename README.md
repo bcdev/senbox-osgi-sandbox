@@ -44,7 +44,13 @@ integration external executables in the a host application.
     Result: Probably good support using the _Application Admin_ of the compendium specs. See code in `teo-gui-apps`
     module.
     
-*UC-6*: Find out how OSGi integrates with Maven and IDEs, namely IntelliJ IDEA. We must be able to easily analyse dependencies,
+*UC-6*: Find out how to setup an OSGi framework, so that users can both install plugins by copying them into a 
+`modules` folder and using a module manager. 
+
+    Result: See `teo-launcher` which installs a directory watcher on `modules` folder. Module changes can easily be 
+    translated into bundle install, update, and uninstall actions. 
+    
+*UC-7*: Find out how OSGi integrates with Maven and IDEs, namely IntelliJ IDEA. We must be able to easily analyse dependencies,
 run and debug in different configurations directly from generated artifacts.
 
     Result: `maven-bundle-plugin` allows to create bundles JARs or create bundle manifest files using POM information.
