@@ -8,7 +8,7 @@ import java.util.Map;
  * Created by Norman on 20.02.14.
  */
 public class OperatorRegistry {
-    public static OperatorRegistry INSTANCE = new OperatorRegistry();
+    public static final OperatorRegistry INSTANCE = new OperatorRegistry();
     private Map<String, OperatorSpi > operatorSpis = new HashMap<>();
 
     public Map<String, OperatorSpi> getOperatorSpis() {

@@ -1,7 +1,7 @@
 package org.teo.apiusage;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.launch.Framework;
 import org.osgi.util.tracker.ServiceTracker;
@@ -15,12 +15,9 @@ import org.teo.launcher.Launcher;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        OperatorRegistry operatorRegistry1 = OperatorRegistry.INSTANCE;
-        System.out.println("operatorRegistry1 = " + operatorRegistry1);
-        for (String opName : operatorRegistry1.getOperatorSpis().keySet()) {
-            System.out.println("  opName: " + opName);
-        }
 
+        // Framework configuration for using exposed 'teo-core' API.
+        //
         System.setProperty(Launcher.TEO_HEADLESS, "true");
         System.setProperty(Launcher.TEO_MODULES_WATCHER, "false");
         //System.setProperty(Constants.FRAMEWORK_BEGINNING_STARTLEVEL, "3");
@@ -33,46 +30,51 @@ public class Main {
         //System.setProperty("org.osgi.framework.bootdelegation", "org.teo.core,org.teo.core.*");
         //System.setProperty("org.osgi.framework.bootdelegation", "org.teo.core");
         System.setProperty("org.osgi.framework.bootdelegation", "org.teo.*,org.teo.core.*");
-        Launcher launcher = Launcher.start();
 
+        Launcher launcher = Launcher.start();
         Framework framework = launcher.getFramework();
-        while (framework.getState() != Bundle.ACTIVE) {
+
+        // Wait until the service is available
+        OperatorRegistry frameworkOperatorRegistry = waitForService(framework);
+
+        // Then assert that the host OperatorRegistry is the same as the framework OperatorRegistry instance.
+        //dumpAvailableFrameworkServices(framework);
+        dumpRegistry("From host app", OperatorRegistry.INSTANCE);
+        dumpRegistry("From OSGi framework", frameworkOperatorRegistry);
+
+        launcher.stopAndWait();
+    }
+
+    private static OperatorRegistry waitForService(Framework framework) throws InterruptedException {
+        ServiceTracker<OperatorRegistry, OperatorRegistry> tracker = new ServiceTracker<>(
+                framework.getBundleContext(), OperatorRegistry.class.getName(), null);
+        tracker.open();
+
+        OperatorRegistry operatorRegistry;
+        while (true) {
+            operatorRegistry = tracker.getService();
+            if (operatorRegistry != null) {
+                break;
+            }
+            System.out.println("Waiting another 100 ms for the service...");
             Thread.currentThread().sleep(100);
         }
 
-        BundleContext bundleContext = framework.getBundleContext();
+        return operatorRegistry;
+    }
 
-        ServiceReference<?>[] allServiceReferences = bundleContext.getServiceReferences((String) null, null);
+    private static void dumpAvailableFrameworkServices(Framework framework) throws InvalidSyntaxException {
+        ServiceReference<?>[] allServiceReferences = framework.getBundleContext().getServiceReferences((String) null, null);
         for (int i = 0; i < allServiceReferences.length; i++) {
             ServiceReference<?> serviceReference = allServiceReferences[i];
             System.out.println("allServiceReferences[" + i + "] = " + serviceReference);
         }
+    }
 
-        ServiceTracker<OperatorRegistry, OperatorRegistry> tracker = new ServiceTracker<>(
-                framework.getBundleContext(), OperatorRegistry.class.getName(), null);
-        tracker.open(true);
-
-        OperatorRegistry operatorRegistry2 = null;
-        while (true) {
-            operatorRegistry2 = tracker.getService();
-            System.out.println("operatorRegistry2 = " + operatorRegistry2);
-            if (operatorRegistry2 != null) {
-                break;
-            }
-            Thread.currentThread().sleep(100);
+    private static void dumpRegistry(String label, OperatorRegistry operatorRegistry) {
+        System.out.println(label + ": operatorRegistry = " + operatorRegistry);
+        for (String opName : operatorRegistry.getOperatorSpis().keySet()) {
+            System.out.println("  opName: " + opName);
         }
-
-
-        ServiceReference serviceReference = bundleContext.getServiceReference(OperatorRegistry.class.getName());
-        System.out.println("serviceReference = " + serviceReference);
-        if (serviceReference != null) {
-            OperatorRegistry operatorRegistry3 = (OperatorRegistry) bundleContext.getService(serviceReference);
-
-            System.out.println("operatorRegistry3 = " + operatorRegistry3);
-            for (String opName : operatorRegistry3.getOperatorSpis().keySet()) {
-                System.out.println("  opName: " + opName);
-            }
-        }
-        launcher.stopAndWait();
     }
 }
