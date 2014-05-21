@@ -28,10 +28,11 @@ we currently provide app services via two mechanisms: Java SPI and our Ceres ext
 accessible in CLI mode. In CLI mode, we are restricted to Java SPI which requires a non-configurable
 SPI implementation in Java.
 
-    Result: Bundles expose client API, other bundles implement them as services. The client API bundles
+    Result: Embed the OSGi framework. Bundles expose client API, other bundles implement them as services. The client API bundles
     are put on the classpath of the host app. Then a configured 
     framework instance is started. It allows the framework to delegate class loading to the app class loader
     for exposed client APIs. Then we access services via the framework's bundle context. 
+    TODO: can we run OSGi embedded in a Tomcat servlet?
 
 *UC-4*: Find out how OSGi can help implementing the _Toolbox Concept_, which is set of modules within a host application.
 
