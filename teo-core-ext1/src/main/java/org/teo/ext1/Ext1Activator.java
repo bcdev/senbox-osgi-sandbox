@@ -62,6 +62,7 @@ public class Ext1Activator implements BundleActivator {
             public void modifiedService(ServiceReference<OperatorRegistry> reference, OperatorRegistry service) {
             }
         });
+        tracker.open();
     }
 
     @Override

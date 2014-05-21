@@ -20,24 +20,24 @@ public class Ext2Activator implements BundleActivator {
 
     @Override
     public void start(final BundleContext context) throws Exception {
-        opASpi = new OperatorSpi("Ext1.A") {
+        opASpi = new OperatorSpi("Ext2.A") {
             @Override
             public Operator createOperator() {
                 return new Operator() {
                     @Override
                     public Product process(Product source) {
-                        return new Product(source.getName() + ".Ext1.A");
+                        return new Product(source.getName() + ".Ext2.A");
                     }
                 };
             }
         };
-        opBSpi = new OperatorSpi("Ext1.B") {
+        opBSpi = new OperatorSpi("Ext2.B") {
             @Override
             public Operator createOperator() {
                 return new Operator() {
                     @Override
                     public Product process(Product source) {
-                        return new Product(source.getName() + ".Ext1.B");
+                        return new Product(source.getName() + ".Ext2.B");
                     }
                 };
             }
@@ -62,6 +62,7 @@ public class Ext2Activator implements BundleActivator {
             public void modifiedService(ServiceReference<OperatorRegistry> reference, OperatorRegistry service) {
             }
         });
+        tracker.open();
     }
 
     @Override
