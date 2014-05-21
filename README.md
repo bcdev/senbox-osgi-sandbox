@@ -28,17 +28,27 @@ we currently provide app services via two mechanisms: Java SPI and our Ceres ext
 accessible in CLI mode. In CLI mode, we are restricted to Java SPI which requires a non-configurable
 SPI implementation in Java.
 
-    Result: no results so far.
+    Result: Bundles expose client API, other bundles implement them as services. The client API bundles
+    are put on the classpath of the host app. Then a configured 
+    framework instance is started. It allows the framework to delegate class loading to the app class loader
+    for exposed client APIs. Then we access services via the framework's bundle context. 
 
 *UC-4*: Find out how OSGi can help implementing the _Toolbox Concept_, which is set of modules within a host application.
 
     Result: Excellent support using the _Package Deployment Admin_ of the compendium specs. See code in `teo-gui-obr` module.
-
+    See also module `obr-maven-plugin` which can create spec-conform deployment packages. 
+   
 *UC-5*: Find out how OSGi can help implementing the _Stand-Alone Tools Adapter_, which is an an environment for the
 integration external executables in the a host application.
 
     Result: Probably good support using the _Application Admin_ of the compendium specs. See code in `teo-gui-apps`
     module.
+    
+*UC-6*: Find out how OSGi integrates with Maven and IDEs, namely IntelliJ IDEA. We must be able to easily analyse dependencies,
+run and debug in different configurations directly from generated artifacts.
+
+    Result: `maven-bundle-plugin` allows to create bundles JARs or create bundle manifest files using POM information.
+    IDEA has OSGi framework support through specific facets.
 
 
 Project Structure
